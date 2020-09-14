@@ -8,16 +8,16 @@ class DishDetail extends Component {
     constructor(props) {
         super(props);
       }
- 
-
+    
 
 
     render() {
 
-        const dish = this.props.selectedDish    
-             
-        if(dish != null) {   
-            const comments = this.props.selectedDish.comments.map(
+        const clickedDish = this.props.dish && this.props.dish[0]
+       
+        
+        if(clickedDish != null) {   
+            const comments = clickedDish.comments.map(
                 (comment) => {
                     return (
                         <div key={comment.id} className="my-3">
@@ -32,15 +32,15 @@ class DishDetail extends Component {
                 <Card>
                     <div className="row">
                     <div class="col-12 col-md-5 m-1">
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
+                    <CardImg width="100%" src={clickedDish.image} alt={clickedDish.name} />
                     <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
+                        <CardTitle>{clickedDish.name}</CardTitle>
+                        <CardText>{clickedDish.description}</CardText>
                     </CardBody>
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <h4>Comments</h4>
-                        {comments}
+                         {comments}
                     </div>
                     </div>
                 </Card>
