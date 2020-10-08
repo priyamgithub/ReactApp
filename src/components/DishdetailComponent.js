@@ -5,6 +5,8 @@ import Moment from 'moment';
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { render } from '@testing-library/react';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -26,6 +28,9 @@ class CommentForm extends React.Component {
     });
   };
   handleSubmit = (values) => {
+   
+   console.log("Current State is: " + JSON.stringify(values));
+   alert("Current State is: " + JSON.stringify(values));
    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   };
 
@@ -136,7 +141,7 @@ class CommentForm extends React.Component {
                 <Card>
                     
                     
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
+                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
@@ -182,7 +187,26 @@ class CommentForm extends React.Component {
     }
 
     const DishDetail = (props) => {
-        if(props.dish !=null)
+             
+      if (props.isLoading) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.dish != null) 
         return (
             <div className="container">
             <div className="row">
