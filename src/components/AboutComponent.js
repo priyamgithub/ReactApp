@@ -1,6 +1,9 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, CardImg, CardImgOverlay, CardText, CardTitle, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import { Loading } from '../components/LoadingComponent';
+import { FadeTransform, Stagger, Fade } from 'react-animation-components';
 
 function About(props) {
 
@@ -13,7 +16,21 @@ function About(props) {
      
     });
 
-    function RenderLeader({ leader}) {
+    function RenderLeader({ leader, isLoading, errMess }) {
+        if (isLoading) {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <Loading />
+                    </div>
+                </div>
+            );
+        } else if (errMess) {
+            return (
+                <h4>{errMess}</h4>
+            )
+        }
+        else
         return(
             <div className="mb-3 ">
             <Media >
@@ -23,7 +40,7 @@ function About(props) {
                 <Media
                 object
                 class="d-flex mr-3 img-thumbnail align-self-center" 
-                src={leader.image}
+                src={baseUrl + leader.image}
                 alt={leader.name}
                 />
                 </div>
